@@ -13,6 +13,7 @@ pub mod main_panel;
 pub mod side_panel;
 pub mod traits;
 pub use dialogs::{DialogState, render_new_session_dialog, render_rename_session_dialog};
+pub use main_panel::MainPanelState;
 pub use traits::*;
 use eframe::egui;
 use std::sync::Arc;
