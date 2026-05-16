@@ -8,3 +8,4 @@
 //! The host creates concrete implementations of the trait interfaces and passes them
 //! to [`run()`], which constructs the eframe app and runs it.
 
+pub mod main_panel;
