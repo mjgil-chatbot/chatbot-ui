@@ -6,11 +6,13 @@
 use eframe::egui;
 use std::sync::Arc;
 pub mod header;
+pub mod input;
 pub mod summary;
 use crate::traits::ModelCatalog;
 use crate::traits::ProcessingState;
 use crate::traits::ProviderInfo;
 use crate::traits::SessionView;
+use crate::traits::UiActions;
 pub struct MainPanelState {
     pub side_panel: crate::side_panel::SidePanelState,
     pub show_system_prompt: bool,
@@ -37,6 +39,26 @@ fn render_panel_separator(ui: &mut egui::Ui, width: f32) {
         rect.center().y,
         ui.visuals().widgets.noninteractive.bg_stroke,
     );
+}
+fn render_system_prompt_area(
+    ui: &mut egui::Ui,
+    state: &mut MainPanelState,
+    actions: &mut dyn UiActions,
+) -> egui::Rect {
+    let response = ui.group(|ui| {
+        ui.label("System Prompt:");
+        ui.add_sized(
+            [ui.available_width(), 60.0],
+            egui::TextEdit::multiline(&mut state.system_prompt_text)
+                .hint_text("Enter system prompt here (optional)..."),
+        );
+
+        if state.system_prompt_dirty {
+            actions.set_system_prompt(Some(state.system_prompt_text.clone()));
+            state.system_prompt_dirty = false;
+        }
+    });
+    response.response.rect
 }
 fn render_status_bar(
     ui: &mut egui::Ui,
