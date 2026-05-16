@@ -9,3 +9,4 @@
 //! to [`run()`], which constructs the eframe app and runs it.
 
 pub mod main_panel;
+pub mod traits;
