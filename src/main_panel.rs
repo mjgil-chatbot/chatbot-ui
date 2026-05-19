@@ -24,6 +24,25 @@ pub struct MainPanelState {
     pub should_focus_input: bool,
     pub pending_layout_log: bool,
 }
+impl MainPanelState {
+    pub fn new() -> Self {
+        Self {
+            side_panel: crate::side_panel::SidePanelState::new(),
+            show_system_prompt: false,
+            show_json_summary: false,
+            system_prompt_text: String::new(),
+            system_prompt_dirty: false,
+            current_json_summary_full: None,
+            input_text: String::new(),
+            should_focus_input: false,
+            pending_layout_log: false,
+        }
+    }}
+impl Default for MainPanelState {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 const CONTENT_MAX_WIDTH: f32 = 820.0;
 fn clamp_content_width(ui: &mut egui::Ui, width: f32) {
     ui.set_width(width);
