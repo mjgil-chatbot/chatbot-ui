@@ -13,6 +13,7 @@ pub mod main_panel;
 pub mod message;
 pub mod message_list;
 pub mod side_panel;
+pub mod state;
 pub mod traits;
 pub use dialogs::{DialogState, render_new_session_dialog, render_rename_session_dialog};
 pub use main_panel::MainPanelState;
