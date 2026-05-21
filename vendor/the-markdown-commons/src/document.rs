@@ -1,4 +1,6 @@
 use std::collections::{HashMap, VecDeque};
+mod cache;
+mod parse_support;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CodeBlock {
     pub language: Option<String>,
