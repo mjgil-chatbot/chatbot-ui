@@ -2,3 +2,5 @@
 
 mod common;
 pub mod document;
+#[cfg(feature = "egui")]
+pub mod egui;
