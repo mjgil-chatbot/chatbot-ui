@@ -2,6 +2,7 @@ use crate::common::Alignment;
 use crate::inline::InlineNode;
 use std::collections::{HashMap, VecDeque};
 mod cache;
+mod markdownish;
 mod parse_support;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct MarkdownDocument {
