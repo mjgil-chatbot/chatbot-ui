@@ -2,5 +2,7 @@
 
 mod common;
 pub mod document;
+pub mod inline;
+mod parse_util;
 #[cfg(feature = "egui")]
 pub mod egui;
