@@ -1,6 +1,7 @@
 use crate::common::Alignment;
 use crate::inline::InlineNode;
 use std::collections::{HashMap, VecDeque};
+use self::cache::{insert_cached_document, touch_cache_order};
 mod cache;
 mod markdownish;
 mod parse_support;
@@ -603,6 +604,40 @@ pub struct DocumentCache {
     fragment_document_bytes: usize,
 }
 impl DocumentCache {
+    pub fn parse_document(&mut self, input: &str) -> MarkdownDocument {
+        if let Some(document) = self.full_documents.get(input).cloned() {
+            touch_cache_order(&mut self.full_order, input);
+            return document;
+        }
+
+        let document = parse::parse_document(input);
+        insert_cached_document(
+            &mut self.full_documents,
+            &mut self.full_order,
+            &mut self.full_document_bytes,
+            input,
+            &document,
+        );
+        document
+    }}
+impl DocumentCache {
+    pub fn parse_document_fragment(&mut self, input: &str) -> MarkdownDocument {
+        if let Some(document) = self.fragment_documents.get(input).cloned() {
+            touch_cache_order(&mut self.fragment_order, input);
+            return document;
+        }
+
+        let document = parse::parse_document_fragment(input);
+        insert_cached_document(
+            &mut self.fragment_documents,
+            &mut self.fragment_order,
+            &mut self.fragment_document_bytes,
+            input,
+            &document,
+        );
+        document
+    }}
+impl DocumentCache {
     pub fn clear(&mut self) {
         self.full_documents.clear();
         self.fragment_documents.clear();
@@ -697,4 +732,10 @@ pub fn parse_document(input: &str) -> MarkdownDocument {
 }
 pub fn parse_document_fragment(input: &str) -> MarkdownDocument {
     parse::parse_document_fragment(input)
+}
+pub fn parse_document_cached(cache: &mut DocumentCache, input: &str) -> MarkdownDocument {
+    cache.parse_document(input)
+}
+pub fn parse_document_fragment_cached(cache: &mut DocumentCache, input: &str) -> MarkdownDocument {
+    cache.parse_document_fragment(input)
 }
