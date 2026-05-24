@@ -10,6 +10,10 @@ mod headless_layout_tests;
 #[cfg(test)]
 mod headless_tests;
 mod inline;
+mod lists;
+#[cfg(test)]
+mod parse;
+mod render;
 mod style;
 #[allow(unused_imports)]
 use crate::common::{self, Alignment};
